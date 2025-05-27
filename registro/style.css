@@ -1,0 +1,102 @@
+/* Estilos generales del formulario */
+form {
+  position: relative;
+  z-index: 1;
+  max-width: 400px;
+  margin: 100px auto;
+  background: black;
+  padding: 30px 40px;
+  border-radius: 15px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+}
+
+h2 {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: white;
+  margin-top: 40px;
+  font-size: 3em;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #f6f3f3;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 8px;
+  background: #f2f2f2;
+}
+
+input[type="submit"] {
+  width: 100%;
+  background-color: #197813;
+  color: white;
+  font-weight: bold;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+input[type="submit"]:hover {
+  background-color: #197813;
+}
+
+/* Fondo general del body */
+body {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  height: 100vh;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
+.toast-error {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 12px 24px;
+  border: 1px solid #f5c6cb;
+  border-radius: 12px;
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease-in-out;
+}
+
+.toast-error.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+

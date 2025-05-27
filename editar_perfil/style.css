@@ -1,0 +1,79 @@
+/* Fondo general (se espera que el fondo se aplique vía JavaScript usando body[data-fondo]) */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  color: white;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+/* Contenedor del formulario */
+form {
+  max-width: 500px;
+  margin: 120px auto 0; /* deja espacio para el header */
+  padding: 30px;
+  background-color: black;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.6);
+}
+
+/* Título */
+h2 {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: white;
+  margin-top: 40px;
+  font-size: 3em;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+/* Etiquetas */
+label {
+  display: block;
+  margin: 15px 0 5px;
+  font-weight: bold;
+}
+
+/* Campos de entrada */
+input[type="text"],
+input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+/* Botón de envío */
+input[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  background-color: #197813;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+  background-color: #70cc69;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  form {
+    margin: 100px 20px;
+    padding: 20px;
+  }
+
+  h2 {
+    font-size: 1.5em;
+  }
+}

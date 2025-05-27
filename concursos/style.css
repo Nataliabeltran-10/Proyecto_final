@@ -1,0 +1,105 @@
+/* Fondo de la página */
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: url('../fotos/fondo.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+/* Contenedor del formulario */
+.form-container {
+  position: relative;
+  z-index: 1;
+  max-width: 400px;
+  margin: 100px auto;
+  background: black;
+  padding: 30px 40px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px white;
+}
+
+h2 {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: white;
+  margin-top: 40px;
+  font-size: 3em;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: white;
+}
+
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 8px;
+  background: #f2f2f2;
+}
+
+input[type="file"] {
+  margin-bottom: 20px;
+}
+
+input[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background-color:#197813;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+input[type="submit"]:hover {
+  background-color: #6dc267;
+}
+
+/* ==== TOASTS ==== */
+.toast {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 16px 24px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  text-align: center;
+  max-width: 350px;
+  width: 80%;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+/* Éxito: verde suave */
+.toast.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 2px solid #c3e6cb;
+}
+
+/* Error: rojo suave */
+.toast.error {
+  background-color: #fde2e2;
+  color: #6e1b1b;
+  border: 2px solid #f5c2c7;
+}
+
+/* Clase para ocultar */
+.toast.hide {
+  opacity: 0;
+}

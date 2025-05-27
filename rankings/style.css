@@ -1,0 +1,48 @@
+body {
+    background-image: url('../fotos/fondo.jpg') !important;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-family: 'Arial', sans-serif;
+    color: #ffffff;
+    margin: 0;
+
+    /* Ajusta este valor según la altura real del header si es fijo */
+    padding-top: 1px; 
+}
+
+.titulo {
+   position: relative;
+  z-index: 1;
+  text-align: center;
+  color: white;
+  margin-top: 40px;
+  font-size: 3em;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+.grafico-container {
+    background-color: rgba(0, 0, 0, 0.5);
+    margin: 30px auto;
+    padding: 25px;
+    border-radius: 15px;
+    max-width: 900px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+}
+
+.grafico-container h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    color: white;
+    text-shadow: 1px 1px 3px #000;
+}
+
+canvas {
+    width: 100% !important;
+    max-height: 450px;
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid #fff;
+    border-radius: 10px;
+}
