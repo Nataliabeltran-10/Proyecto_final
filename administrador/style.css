@@ -25,7 +25,6 @@ h2.titulo {
   text-shadow: 1px 1px 3px black;
 }
 
-/* Galería de fotos centrada */
 .galeria-admin {
   display: flex;
   flex-wrap: wrap;
@@ -33,8 +32,8 @@ h2.titulo {
   gap: 1rem;
 }
 
-/* Tarjeta de foto */
-.foto-card {
+
+.foto-carta {
   background: black;
   border-radius: 12px;
   padding: 1rem;
@@ -44,14 +43,13 @@ h2.titulo {
   text-align: center;
 }
 
-.foto-card img {
+.foto-carta img {
   width: 100%;
   height: auto;
   border-radius: 8px;
   margin-bottom: 0.5rem;
 }
 
-/* Formularios */
 .form-admision, .form-usuario {
   display: flex;
   flex-wrap: wrap;
@@ -60,7 +58,6 @@ h2.titulo {
   margin-top: 0.5rem;
 }
 
-/* Botones */
 button {
   background-color: #197813;
   color: white;
@@ -75,7 +72,6 @@ button:hover {
   background-color: #7de376;
 }
 
-/* Botones específicos */
 .btn-rechazar,
 .btn-eliminar-usuario {
   background-color: #d9534f;
@@ -98,13 +94,11 @@ button:hover {
   background-color: #449d44;
 }
 
-/* Contenedor de tabla para scroll horizontal en móviles */
 .table-container {
   width: 100%;
   overflow-x: auto;
 }
 
-/* Tablas */
 table.tabla_formato {
   width: 90%;
   max-width: 800px;
@@ -127,7 +121,6 @@ table.tabla_formato th {
   text-align: left;
 }
 
-/* Inputs */
 input[type="text"],
 input[type="email"],
 input[type="datetime-local"],
@@ -139,7 +132,6 @@ input[type="number"] {
   box-sizing: border-box;
 }
 
-/* Grid de ganadores */
 .ganadores-grid {
   display: flex;
   flex-wrap: wrap;
@@ -148,8 +140,7 @@ input[type="number"] {
   margin-bottom: 2rem;
 }
 
-/* Tarjeta de ganador */
-.ganador-card {
+.ganador-carta {
   background: black;
   color: white;
   border-radius: 12px;
@@ -160,18 +151,17 @@ input[type="number"] {
   transition: transform 0.2s ease;
 }
 
-.ganador-card:hover {
+.ganador-carta:hover {
   transform: scale(1.03);
 }
 
-.ganador-card img {
+.ganador-carta img {
   width: 100%;
   height: auto;
   border-radius: 10px;
   margin-bottom: 0.5rem;
 }
 
-/* TOAST */
 .toast {
   position: fixed;
   top: 20px;
@@ -188,7 +178,6 @@ input[type="number"] {
   transition: opacity 0.5s ease;
 }
 
-/* MODAL DE CONFIRMACIÓN */
 .modal-confirm {
   position: fixed;
   top: 0;
@@ -233,7 +222,6 @@ input[type="number"] {
   background-color: #5cb85c;
 }
 
-/* RESPONSIVE DESIGN */
 @media (max-width: 768px) {
   h1.titulo-principal {
     font-size: 2.2em;
@@ -243,7 +231,7 @@ input[type="number"] {
     font-size: 1.5rem;
   }
 
-  .foto-card, .ganador-card {
+  .foto-carta, .ganador-carta {
     width: 90%;
     max-width: 320px;
   }

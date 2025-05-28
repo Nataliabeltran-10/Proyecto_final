@@ -3,14 +3,14 @@ session_start();
 $rutaBase = '../';
 require_once("conexion.php");
 
-// Solo acceso a administradores
+// Solo puede acceder usuarios con rol de administador
 if (!isset($_SESSION['usuario_id']) || $_SESSION['usuario_rol'] !== 'administrador') {
     header("Location: {$rutaBase}login/login.php");
     exit;
 }
 
 
-// API AJAX: fotos
+// Solicitud POST para actualizar el estado de la foto 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['foto_id'])) {
     $fotoId = intval($_POST['foto_id']);
     $accion = $_POST['accion'];
@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['foto_id'])) {
     exit;
 }
 
-// API AJAX: usuarios
+// Solicitud POST para eliminar o actualizar un usuario
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['usuario_accion'])) {
     $usuarioId = intval($_POST['usuario_id']);
     if ($_POST['usuario_accion'] === 'eliminar') {
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['usuario_accion'])) {
     exit;
 }
 
-// API AJAX: concursos
+// Solicitud POST para editar los datos de los concursos 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['concurso_accion']) && $_POST['concurso_accion']==='editar_concurso') {
     $id = intval($_POST['concurso_id']);
     $stmt = $conn->prepare(
@@ -61,12 +61,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['concurso_accion']) &&
     exit;
 }
 
-// Fetch data para vista
+// Consulta de fotos en estado 'pendiente'
 $fotos = $conn->query("SELECT f.id,f.titulo_imagen,f.descripcion,f.concurso,u.nombre,f.imagen FROM fotos f JOIN usuarios u ON f.usuario_id=u.id WHERE f.estado='pendiente' ORDER BY f.id DESC")->fetchAll(PDO::FETCH_ASSOC);
+// Consulta ranking de fotos admitidas por concurso basada en la suma de sus puntos
 $ganadores = $conn->query(
     "SELECT f.concurso,f.id AS foto_id,f.titulo_imagen,f.imagen,u.nombre,SUM(v.puntuacion) AS total FROM fotos f JOIN votos v ON f.id=v.foto_id JOIN usuarios u ON f.usuario_id=u.id WHERE f.estado='admitida' GROUP BY f.id ORDER BY f.concurso,total DESC"
 )->fetchAll(PDO::FETCH_ASSOC);
+// Consulta para listar usuario con rol de participante 
 $usuarios = $conn->query("SELECT * FROM usuarios WHERE rol='participante'")->fetchAll(PDO::FETCH_ASSOC);
+// Concurso para lsitar los concursos 
 $concursos = $conn->query("SELECT * FROM concursos")->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
@@ -79,10 +82,9 @@ $concursos = $conn->query("SELECT * FROM concursos")->fetchAll(PDO::FETCH_ASSOC)
 </head>
 <body>
   <?php require_once("../header/header.php"); ?>
-  <!-- Toast de notificación -->
   <div id="toast" class="toast" style="display:none;"></div>
 
-  <!-- Modal de confirmación para eliminar -->
+  <!-- Confirmación para borrar usuario -->
   <div id="modal-confirm" class="modal modal-confirm" style="display:none;">
     <div class="modal-contentu">
       <p>¿Estás seguro de que quieres eliminar este usuario?</p>
@@ -95,14 +97,14 @@ $concursos = $conn->query("SELECT * FROM concursos")->fetchAll(PDO::FETCH_ASSOC)
 
   <h1 class="titulo-principal">Panel de Administrador</h1>
 
-  <!-- Sección: Admisión de Fotos -->
+  <!-- Administrar fotos enviada por los participantes-->
   <section>
     <h2 class="titulo">Admisión de Fotos</h2>
     <div class="galeria-admin">
       <?php if(empty($fotos)): ?>
         <p>No hay fotos pendientes.</p>
       <?php else: foreach($fotos as $f): ?>
-        <div class="foto-card">
+        <div class="foto-carta">
           <img src="data:image/jpeg;base64,<?= base64_encode($f['imagen']) ?>" alt="<?=htmlspecialchars($f['titulo_imagen'])?>">
           <h3><?=htmlspecialchars($f['titulo_imagen'])?></h3>
           <p><strong>Participante:</strong> <?=$f['nombre']?></p>
@@ -117,14 +119,14 @@ $concursos = $conn->query("SELECT * FROM concursos")->fetchAll(PDO::FETCH_ASSOC)
     </div>
   </section>
 
-  <!-- Sección: Ganadores por Concurso -->
+  <!-- Muestra ganadores de cada concurso -->
   <section>
     <h2 class="titulo">Ganadores por Concurso</h2>
     <div class="ganadores-grid">
       <?php if(empty($ganadores)): ?>
         <p>No hay ganadores disponibles todavía.</p>
       <?php else: foreach($ganadores as $g): ?>
-        <div class="ganador-card">
+        <div class="ganador-carta">
           <img src="data:image/jpeg;base64,<?= base64_encode($g['imagen']) ?>" alt="<?=htmlspecialchars($g['titulo_imagen'])?>">
           <h3><?= htmlspecialchars($g['titulo_imagen']) ?></h3>
           <p><strong>Concurso:</strong> <?= htmlspecialchars($g['concurso']) ?></p>
@@ -135,7 +137,7 @@ $concursos = $conn->query("SELECT * FROM concursos")->fetchAll(PDO::FETCH_ASSOC)
     </div>
   </section>
 
-  <!-- Sección: Edición de Usuarios -->
+  <!-- Actualización y eliminación de usuarios -->
   <section>
     <h2 class="titulo">Edición de Usuarios</h2>
     <table class="tabla_formato">
@@ -157,7 +159,7 @@ $concursos = $conn->query("SELECT * FROM concursos")->fetchAll(PDO::FETCH_ASSOC)
     </table>
   </section>
 
-  <!-- Sección: Edición de Concursos -->
+  <!-- Actualización de concursos -->
   <section>
     <h2 class="titulo">Edición de Concursos</h2>
     <table class="tabla_formato">
@@ -179,9 +181,9 @@ $concursos = $conn->query("SELECT * FROM concursos")->fetchAll(PDO::FETCH_ASSOC)
   </section>
 
   <script>
-  // Variable para guardar el div de usuario a eliminar
   let usuarioAEliminar = null;
 
+  // Mensaje breve 
   function showToast(mensaje) {
     const toast = document.getElementById('toast');
     toast.textContent = mensaje;
@@ -208,14 +210,14 @@ $concursos = $conn->query("SELECT * FROM concursos")->fetchAll(PDO::FETCH_ASSOC)
   }
 
   document.addEventListener('DOMContentLoaded', ()=>{
-    // Fotos
+    // Admicion o rechazo de fotos 
     document.querySelectorAll('.form-admision').forEach(div=>{
       const id = div.dataset.id;
-      div.querySelector('.btn-admitir').onclick = _=>ajax({foto_id:id,accion:'admitir'},()=>div.closest('.foto-card').remove());
-      div.querySelector('.btn-rechazar').onclick = _=>ajax({foto_id:id,accion:'rechazar'},()=>div.closest('.foto-card').remove());
+      div.querySelector('.btn-admitir').onclick = _=>ajax({foto_id:id,accion:'admitir'},()=>div.closest('.foto-carta').remove());
+      div.querySelector('.btn-rechazar').onclick = _=>ajax({foto_id:id,accion:'rechazar'},()=>div.closest('.foto-carta').remove());
     });
 
-    // Usuarios
+    // Edición y eliminación de usuarios en la tabla 
     document.querySelectorAll('.form-usuario').forEach(div=>{
       const id = div.dataset.id;
       div.querySelector('.btn-guardar-usuario').onclick = _=>{
@@ -232,7 +234,7 @@ $concursos = $conn->query("SELECT * FROM concursos")->fetchAll(PDO::FETCH_ASSOC)
       };
     });
 
-    // Botones del modal de confirmación
+    // Boton de confirmacion para borrar un usuario
     document.getElementById('confirm-delete').onclick = ()=>{
       if (!usuarioAEliminar) return cerrarModal();
       const id = usuarioAEliminar.dataset.id;
@@ -247,7 +249,7 @@ $concursos = $conn->query("SELECT * FROM concursos")->fetchAll(PDO::FETCH_ASSOC)
     };
     document.getElementById('cancel-delete').onclick = cerrarModal;
 
-    // Concursos
+    // Boton para guardar cambios en el concurso
     document.querySelectorAll('.btn-guardar-concurso').forEach(btn=>{
       btn.onclick = _=>{
         const id = btn.dataset.id;
@@ -266,6 +268,7 @@ $concursos = $conn->query("SELECT * FROM concursos")->fetchAll(PDO::FETCH_ASSOC)
     });
   });
 
+  // Función ajax para enviar los datos
   function ajax(data, onSuccess){
     fetch('', {
       method: 'POST',
