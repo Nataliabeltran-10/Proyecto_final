@@ -36,7 +36,8 @@ foreach ($fotos as $foto) {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Ranking de Votaciones</title>
+    <title>AndaRally</title>
+    <link rel="icon" href="../fotos/logo.png" type="image/png">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="../header/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

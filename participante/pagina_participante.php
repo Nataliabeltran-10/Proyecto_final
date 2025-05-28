@@ -20,7 +20,8 @@ $rutaFondo = "{$rutaBase}fotos/fondo.jpg";
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Página Participante</title>
+    <title>AndaRally</title>
+    <link rel="icon" href="../fotos/logo.png" type="image/png">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="<?= $rutaBase ?>header/style.css">
 </head>

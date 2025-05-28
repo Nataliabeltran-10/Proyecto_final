@@ -42,7 +42,8 @@ require_once("{$rutaBase}header/header.php");
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Editar Perfil</title>
+  <title>AndaRally</title>
+  <link rel="icon" href="../fotos/logo.png" type="image/png">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="../header/style.css">
 </head>

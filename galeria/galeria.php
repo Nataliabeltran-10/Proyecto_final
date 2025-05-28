@@ -89,6 +89,8 @@ $stmt->execute([$concursoNombre]);
 $fotos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
+<title>AndaRally</title>
+<link rel="icon" href="../fotos/logo.png" type="image/png">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="../header/style.css">
 

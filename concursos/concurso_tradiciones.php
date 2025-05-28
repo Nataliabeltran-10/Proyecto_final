@@ -91,7 +91,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($errores)) {
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Concurso Tradiciones Bonitos</title>
+  <title>AndaRally</title>
+  <link rel="icon" href="../fotos/logo.png" type="image/png">
   <!-- CSS del header (incluye toast-error) -->
   <link rel="stylesheet" href="<?= $rutaBase ?>header/style.css">
   <!-- tu propio CSS -->

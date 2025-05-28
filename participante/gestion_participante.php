@@ -66,7 +66,8 @@ $imagenes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Estado Imágenes</title>
+  <title>AndaRally</title>
+  <link rel="icon" href="../fotos/logo.png" type="image/png">
   <link rel="stylesheet" href="../header/style.css">
   <link rel="stylesheet" href="style_gestion.css">
 </head>

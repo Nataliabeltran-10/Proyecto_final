@@ -130,6 +130,8 @@ $mensajeAgradecimiento = $_SESSION['mensaje'] ?? '';
 unset($_SESSION['mensaje']);
 ?>
 
+<title>AndaRally</title>
+<link rel="icon" href="../fotos/logo.png" type="image/png">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="../header/style.css">
 

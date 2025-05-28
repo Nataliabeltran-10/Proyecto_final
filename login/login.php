@@ -53,7 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Iniciar Sesión</title>
+  <title>AndaRally</title>
+  <link rel="icon" href="../fotos/logo.png" type="image/png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body data-fondo="<?= htmlspecialchars($rutaFondo) ?>">
