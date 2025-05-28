@@ -27,7 +27,7 @@ $concurso = $stmt->fetch();
 if (!$concurso) {
     $errores[] = "No se encontró el concurso.";
 } else {
-    // conprueba que la fecha actual este dentro del plazo de validez
+    // comprueba que la fecha actual este dentro del plazo de validez
     if ($hoy < $concurso['fecha_inicio'] || $hoy > $concurso['fecha_fin']) {
         $errores[] = "El periodo para participar en el concurso ha finalizado o aún no ha comenzado.";
     }
@@ -129,9 +129,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($errores)) {
       document.body.style.backgroundSize = 'cover';
     }
 
-    // Si hay errores PHP, los mostramos con showToast()
+    // Comprobar si hay erroes en el servidor
     <?php if (!empty($errores)): 
-        // escapamos y convertimos a una sola línea
         $msg = implode(' | ', array_map('htmlspecialchars', $errores));
     ?>
       document.addEventListener('DOMContentLoaded', () => {
@@ -139,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($errores)) {
       });
     <?php endif; ?>
 
-    // Si hay mensaje de éxito, también lo mostramos (reutilizando showToast)
+    // Mostrar mensaje de exito
     <?php if ($mensajeExito): ?>
       document.addEventListener('DOMContentLoaded', () => {
         showToast("<?= htmlspecialchars($mensajeExito) ?>");

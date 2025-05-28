@@ -1,4 +1,3 @@
-/* Fondo de la página */
 body {
   margin: 0;
   padding: 0;
@@ -7,7 +6,7 @@ body {
   background-size: cover;
 }
 
-/* Contenedor del formulario */
+
 .form-container {
   position: relative;
   z-index: 1;
@@ -65,7 +64,6 @@ input[type="submit"]:hover {
   background-color: #6dc267;
 }
 
-/* ==== TOASTS ==== */
 .toast {
   position: fixed;
   top: 80px;
@@ -85,21 +83,18 @@ input[type="submit"]:hover {
   transition: opacity 0.5s ease;
 }
 
-/* Éxito: verde suave */
 .toast.success {
   background-color: #d4edda;
   color: #155724;
   border: 2px solid #c3e6cb;
 }
 
-/* Error: rojo suave */
 .toast.error {
   background-color: #fde2e2;
   color: #6e1b1b;
   border: 2px solid #f5c2c7;
 }
 
-/* Clase para ocultar */
 .toast.hide {
   opacity: 0;
 }

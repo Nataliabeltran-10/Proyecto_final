@@ -9,7 +9,7 @@ $usuario_rol = $_SESSION['usuario_rol'] ?? null;
 
 $concursoNombre = 'Tradiciones';
 
-// Obtener info del concurso
+// Consulta el concurso Tradiciones
 $sqlConcurso = "SELECT * FROM concursos WHERE LOWER(nombre) = LOWER(?)";
 $stmtConcurso = $conn->prepare($sqlConcurso);
 $stmtConcurso->execute([$concursoNombre]);
@@ -18,12 +18,14 @@ $concurso = $stmtConcurso->fetch();
 $concursoActivo = false;
 $ahora = new DateTime();
 
+// Vereficar si el concurso esta activo
 if ($concurso) {
     $fechaInicio = new DateTime($concurso['fecha_inicio']);
     $fechaFin = new DateTime($concurso['fecha_fin']);
     $concursoActivo = $ahora >= $fechaInicio && $ahora <= $fechaFin;
 }
 
+// Obtiene las fotos admitidas 
 $sql = "SELECT * FROM fotos WHERE estado = 'admitida' AND LOWER(concurso) = LOWER(?)";
 $stmt = $conn->prepare($sql);
 $stmt->execute([$concursoNombre]);
@@ -33,6 +35,7 @@ $fotos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
 
+    // Verifica si el usuario esta logueado 
     if (!$usuario_id) {
         $mensaje = 'Debes iniciar sesión para votar.';
         if ($isAjax) {
@@ -44,13 +47,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    
     $foto_id = intval($_POST['foto_id']);
     $puntuacion = intval($_POST['puntuacion']);
 
+    // Consulta base de datos información completa de la foto con el ID proporcionado 
     $stmtFoto = $conn->prepare("SELECT * FROM fotos WHERE id = ?");
     $stmtFoto->execute([$foto_id]);
     $foto = $stmtFoto->fetch();
 
+    // Verifica que el usuario no esté intentando votar por su porpia foto 
     if ($foto['usuario_id'] == $usuario_id) {
         $mensaje = "No puedes votar por tu propia foto.";
         if ($isAjax) {
@@ -62,6 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    // Obtiene las fechas de inicio y fin del concurso al que pertenece la foto 
     $sqlConcursoFoto = "
         SELECT c.fecha_inicio, c.fecha_fin 
         FROM fotos f 
@@ -71,6 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute([$foto_id]);
     $datosConcurso = $stmt->fetch();
 
+   
     if (!$datosConcurso) {
         $mensaje = "No se pudo verificar el concurso de la foto.";
         if ($isAjax) {

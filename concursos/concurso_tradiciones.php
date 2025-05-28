@@ -4,27 +4,30 @@ $rutaBase = '../';
 
 require_once("conexion.php");
 
-// Solo participantes logueados pueden subir
+// Solo puede acceder Participante
 if (!isset($_SESSION['usuario_id']) || $_SESSION['usuario_rol'] !== 'participante') {
     header("Location: {$rutaBase}login/login.php");
     exit;
 }
 
+// Variables para configuración 
 $nombreConcurso = 'tradiciones'; 
 $hoy = date('Y-m-d H:i:s');
 $errores = [];
 $mensajeExito = "";
 $rutaFondo = '../fotos/fondo.jpg';
 
-// Obtener datos del concurso
+// Consulta para obtener los datos del concurso lugares
 $sqlConcurso = "SELECT * FROM concursos WHERE nombre = ?";
 $stmt = $conn->prepare($sqlConcurso);
 $stmt->execute([$nombreConcurso]);
 $concurso = $stmt->fetch();
 
+//Verifica si se encontro el concurso 
 if (!$concurso) {
     $errores[] = "No se encontró el concurso.";
 } else {
+  // comprueba que la fecha actual este dentro del plazo de validez
     if ($hoy < $concurso['fecha_inicio'] || $hoy > $concurso['fecha_fin']) {
         $errores[] = "El periodo para participar en el concurso ha finalizado o aún no ha comenzado.";
     }
@@ -35,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($errores)) {
     $titulo      = trim($_POST['titulo']);
     $descripcion = trim($_POST['descripcion']);
 
-    // Límite de fotos
+    // Limite de fotos que puede subir 
     $sqlCount = "SELECT COUNT(*) FROM fotos WHERE usuario_id = ? AND concurso = ?";
     $stmtCount = $conn->prepare($sqlCount);
     $stmtCount->execute([$_SESSION['usuario_id'], $nombreConcurso]);
@@ -44,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($errores)) {
         $errores[] = "No puede subir más de {$concurso['limite_fotos']} fotos.";
     }
 
-    // Duplicado de título
+    // No puede dublicar el titulo
     $sqlCheck = "SELECT 1 FROM fotos WHERE titulo_imagen = ? AND usuario_id = ?";
     $stmtCheck = $conn->prepare($sqlCheck);
     $stmtCheck->execute([$titulo, $_SESSION['usuario_id']]);
@@ -52,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($errores)) {
         $errores[] = "Ya existe una foto con este título.";
     }
 
-    // Validar imagen
+    // Valida que la imagen sea correcta tanto el formato como el tamaño
     if (!isset($_FILES['imagen']) || $_FILES['imagen']['error'] !== UPLOAD_ERR_OK) {
         $errores[] = "Debes seleccionar una imagen válida.";
     } else {
@@ -70,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($errores)) {
         }
     }
 
-    // Insertar si no hay errores
+    // Sube la foto si no hay errores
     if (empty($errores)) {
         $imagenData = file_get_contents($fileTmpPath);
         $sql = "INSERT INTO fotos (usuario_id, imagen, descripcion, titulo_imagen, concurso)
@@ -93,20 +96,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($errores)) {
   <meta charset="UTF-8">
   <title>AndaRally</title>
   <link rel="icon" href="../fotos/logo.png" type="image/png">
-  <!-- CSS del header (incluye toast-error) -->
   <link rel="stylesheet" href="<?= $rutaBase ?>header/style.css">
-  <!-- tu propio CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body data-fondo="<?= $rutaFondo ?>">
-
-  <!-- INCLUYES EL HEADER (y con él el <div id="toast-error">) -->
   <?php require_once "{$rutaBase}header/header.php"; ?>
 
    <h2>Sube tu foto de Tradiciones Bonitos”</h2>
-  <div class="form-container">
-   
 
+   <!-- Formulario para subir fotos -->
+  <div class="form-container">
     <form action="concurso_tradiciones.php" method="POST" enctype="multipart/form-data">
       <label for="titulo">Título de la imagen:</label>
       <input type="text" id="titulo" name="titulo" required>
@@ -122,16 +121,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($errores)) {
   </div>
 
   <script>
-    // Aplica el fondo
+    // Fondo
     const fondo = document.body.getAttribute('data-fondo');
     if (fondo) {
       document.body.style.background = `url('${fondo}') no-repeat center center fixed`;
       document.body.style.backgroundSize = 'cover';
     }
 
-    // Si hay errores PHP, los mostramos con showToast()
+    // Comprobar si hay erroes en el servidor
     <?php if (!empty($errores)): 
-        // escapamos y convertimos a una sola línea
         $msg = implode(' | ', array_map('htmlspecialchars', $errores));
     ?>
       document.addEventListener('DOMContentLoaded', () => {
@@ -139,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($errores)) {
       });
     <?php endif; ?>
 
-    // Si hay mensaje de éxito, también lo mostramos (reutilizando showToast)
+    // Mostrar mensaje de exito
     <?php if ($mensajeExito): ?>
       document.addEventListener('DOMContentLoaded', () => {
         showToast("<?= htmlspecialchars($mensajeExito) ?>");
