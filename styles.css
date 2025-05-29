@@ -197,3 +197,12 @@ body {
     font-size: 1.6em;
   }
 }
+
+.galeria-grid img {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.galeria-grid img.loaded {
+  opacity: 1;
+}
