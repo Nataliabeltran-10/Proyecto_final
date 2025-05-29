@@ -80,8 +80,6 @@
         exit;
     }
 
-    // Después de POST
-    require_once('../header/header.php');
 
     $stmtConcurso = $conn->prepare("SELECT * FROM concursos WHERE LOWER(nombre) = LOWER(?)");
     $stmtConcurso->execute([$concursoNombre]);
@@ -112,6 +110,7 @@
   <link rel="stylesheet" href="../header/style.css?v=1.0">
 </head>
 <body>
+<?php require_once('../header/header.php'); ?>
 <h2>Galería de Fotos: Concurso "Lugares"</h2>
 
     <div id="mensaje-dinamico" class="mensaje-error animar-mensaje" style="display: none;"></div>
