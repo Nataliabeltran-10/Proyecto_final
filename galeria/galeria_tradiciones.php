@@ -144,7 +144,7 @@ $mensajeAgradecimiento = $_SESSION['mensaje'] ?? '';
 unset($_SESSION['mensaje']);
 ?>
 
-!doctype html>
+<!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
