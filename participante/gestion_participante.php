@@ -1,5 +1,6 @@
 <?php
 session_start();
+$rutaBase = '../';
 require_once("conexion.php");
 
 // Verificar sesión y rol
@@ -14,7 +15,7 @@ if (!$usuario_id || $usuario_rol !== 'participante') {
         http_response_code(403);
         exit;
     } else {
-        header("Location: ../index.php");
+        header("Location: {$rutaBase}index.php");
         exit;
     }
 }
@@ -67,12 +68,12 @@ $imagenes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
   <meta charset="UTF-8" />
   <title>AndaRally</title>
-  <link rel="icon" href="../fotos/logo.png" type="image/png">
-  <link rel="stylesheet" href="../header/style.css">
+  <link rel="icon" href="{$rutaBase}fotos/logo.png" type="image/png">
+  <link rel="stylesheet" href="{$rutaBase}header/style.css">
   <link rel="stylesheet" href="style_gestion.css">
 </head>
-<body data-fondo="../fotos/fondo.jpg">
-  <?php include("../header/header.php"); ?>
+<body data-fondo="{$rutaBase}fotos/fondo.jpg">
+  <?php include("{$rutaBase}header/header.php"); ?>
 
   <main class="gestion-participante-container">
     <h2>Estado Imágenes</h2>
