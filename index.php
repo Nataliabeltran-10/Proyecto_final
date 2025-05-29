@@ -143,11 +143,7 @@ $rutaBase = '';
     iniciarCuentaAtras('reloj-lugares', concursos.lugares.inicio, concursos.lugares.fin);
     iniciarCuentaAtras('reloj-tradiciones', concursos.tradiciones.inicio, concursos.tradiciones.fin);
 
-    window.addEventListener('load', () => {
-    document.querySelectorAll('.galeria-grid img').forEach(img => {
-      img.classList.add('loaded');
-    });
-  });
+    
   </script>
 
 </body>

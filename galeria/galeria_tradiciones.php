@@ -197,6 +197,15 @@ unset($_SESSION['mensaje']);
     <?php endforeach; ?>
 </div>
 
+ <!-- Modal para ver imagen en grande -->
+    <div id="modal-imagen" style="display:none;">
+    <div class="modal-fondo"></div>
+    <div class="modal-contenido">
+        <span id="modal-cerrar">&times;</span>
+        <img id="modal-img" src="" alt="Imagen ampliada">
+    </div>
+    </div>
+
 <script>
     // Tiempo para que desaparezca el mensaje 
     setTimeout(() => {
@@ -269,6 +278,25 @@ unset($_SESSION['mensaje']);
         });
     });
 });
+
+  // Código para mostrar imagen en grande en modal
+    document.querySelectorAll('.foto-carta img').forEach(img => {
+    img.style.cursor = 'pointer'; // para que se note que es clickeable
+    img.addEventListener('click', () => {
+        const modal = document.getElementById('modal-imagen');
+        const modalImg = document.getElementById('modal-img');
+        modalImg.src = img.src;
+        modal.style.display = 'flex';
+    });
+    });
+
+    document.getElementById('modal-cerrar').addEventListener('click', () => {
+    document.getElementById('modal-imagen').style.display = 'none';
+    });
+
+    document.querySelector('#modal-imagen .modal-fondo').addEventListener('click', () => {
+    document.getElementById('modal-imagen').style.display = 'none';
+    });
 </script>
 </body>
 </html>
