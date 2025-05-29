@@ -132,10 +132,10 @@ h2 {
 
 .modal-contenido {
   position: relative;
-  width: 60vw;           /* 60% del ancho de la ventana */
-  max-width: 800px;      /* límite máximo si la pantalla es muy grande */
+  width: 10vw;           /* 60% del ancho de la ventana */
+  max-width: 100px;      /* límite máximo si la pantalla es muy grande */
   height: auto;
-  max-height: 80vh;      /* para que no se pase de alto */
+  max-height: 20vh;      /* para que no se pase de alto */
   background: transparent;
   z-index: 10001;
   display: flex;
