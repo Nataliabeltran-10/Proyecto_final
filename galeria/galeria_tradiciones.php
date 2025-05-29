@@ -144,10 +144,17 @@ $mensajeAgradecimiento = $_SESSION['mensaje'] ?? '';
 unset($_SESSION['mensaje']);
 ?>
 
-<title>AndaRally</title>
-<link rel="icon" href="../fotos/logo.png" type="image/png">
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="../header/style.css">
+!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>AndaRally</title>
+  <link rel="icon" href="../fotos/logo.png" type="image/png">
+  <link rel="stylesheet" href="style.css?v=1.0">
+  <link rel="stylesheet" href="../header/style.css?v=1.0">
+</head>
+<body>
+<?php require_once('../header/header.php'); ?>
 
 <h2>Galería de Fotos: Concurso "Tradiciones"</h2>
 
@@ -264,5 +271,6 @@ unset($_SESSION['mensaje']);
     });
 });
 </script>
-
+</body>
+</html>
 <?php ob_end_flush(); ?>
