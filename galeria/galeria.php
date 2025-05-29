@@ -101,12 +101,18 @@
     $fotos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
-    <title>AndaRally</title>
-    <link rel="icon" href="../fotos/logo.png" type="image/png">
-    <link rel="stylesheet" href="style.css?v=1.0">
-    <link rel="stylesheet" href="../header/style.css?v=1.0">
-
-    <h2>Galería de Fotos: Concurso "Lugares"</h2>
+    
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>AndaRally</title>
+  <link rel="icon" href="../fotos/logo.png" type="image/png">
+  <link rel="stylesheet" href="style.css?v=1.0">
+  <link rel="stylesheet" href="../header/style.css?v=1.0">
+</head>
+<body>
+<h2>Galería de Fotos: Concurso "Lugares"</h2>
 
     <div id="mensaje-dinamico" class="mensaje-error animar-mensaje" style="display: none;"></div>
 
@@ -141,6 +147,8 @@
             </div>
         <?php endforeach; ?>
     </div>
+
+    
 
 <script>
     // Tiempo para que desaparezca el mensaje 
@@ -216,4 +224,5 @@
         });
     });
 </script>
-
+</body>
+</html>

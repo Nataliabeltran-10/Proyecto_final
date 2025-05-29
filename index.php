@@ -42,8 +42,8 @@ $rutaBase = '';
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AndaRally</title>
   <link rel="icon" href="fotos/logo.png" type="image/png">
-  <link rel="stylesheet" href="header/style.css?v=1.0" />
-  <link rel="stylesheet" href="styles.css?v=1.0" />
+  <link rel="stylesheet" href="header/style.css" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
