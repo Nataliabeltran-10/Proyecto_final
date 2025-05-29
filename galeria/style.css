@@ -132,8 +132,8 @@ h2 {
 
 .modal-contenido {
   position: relative;
-  max-width: 20vw;
-  max-height: 30vh;
+  max-width: 5vw;
+  max-height: 10vh;
   z-index: 10001;
   display: flex;
   justify-content: center;
