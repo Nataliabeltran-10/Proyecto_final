@@ -68,11 +68,11 @@ $imagenes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
   <meta charset="UTF-8" />
   <title>AndaRally</title>
-  <link rel="icon" href="{$rutaBase}fotos/logo.png" type="image/png">
-  <link rel="stylesheet" href="{$rutaBase}header/style.css">
+  <link rel="icon" href="<?= $rutaBase ?>fotos/logo.png" type="image/png">
+  <link rel="stylesheet" href="<?= $rutaBase ?>header/style.css">
   <link rel="stylesheet" href="style_gestion.css">
 </head>
-<body data-fondo="{$rutaBase}fotos/fondo.jpg">
+<body data-fondo="<?= $rutaBase ?>fotos/fondo.jpg">
   <?php include("{$rutaBase}header/header.php"); ?>
 
   <main class="gestion-participante-container">
