@@ -138,7 +138,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
-require_once('../header/header.php');
 
 $mensajeAgradecimiento = $_SESSION['mensaje'] ?? '';
 unset($_SESSION['mensaje']);
