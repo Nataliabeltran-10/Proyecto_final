@@ -103,8 +103,8 @@
 
     <title>AndaRally</title>
     <link rel="icon" href="../fotos/logo.png" type="image/png">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="../header/style.css">
+    <link rel="stylesheet" href="style.css?v=1.0">
+    <link rel="stylesheet" href="../header/style.css?v=1.0">
 
     <h2>Galería de Fotos: Concurso "Lugares"</h2>
 
