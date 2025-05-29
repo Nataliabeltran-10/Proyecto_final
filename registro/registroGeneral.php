@@ -5,20 +5,24 @@ $rutaFondo = '../fotos/fondo.jpg';
 $errorMsg = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Recoge datos del formulario 
     $nombre = $_POST['nombre'];
     $email = $_POST['email'];
     $contraseña = $_POST['contraseña'];
     $rol = $_POST['rol'];
 
     try {
+        // Verifica si el nombre del usuario ya está registrado 
         $sql = "SELECT * FROM usuarios WHERE nombre = ?";
         $stmt = $conn->prepare($sql);
         $stmt->execute([$nombre]);
         $usuarioExistente = $stmt->fetch();
 
         if ($usuarioExistente) {
+            // Mostrar error si ya existe el usuario
             $errorMsg = "Ya existe un usuario con ese nombre. Por favor, elige otro.";
         } else {
+            // Insertar nuevo usuario con contraseña cifrada
             $sqlInsert = "INSERT INTO usuarios (nombre, email, contraseña, rol) VALUES (?, ?, ?, ?)";
             $stmtInsert = $conn->prepare($sqlInsert);
             $stmtInsert->execute([
@@ -75,12 +79,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </form>
 
     <script>
+        // Fondo
         const fondo = document.body.getAttribute('data-fondo');
         if (fondo) {
             document.body.style.background = `url('${fondo}') no-repeat center center fixed`;
             document.body.style.backgroundSize = 'cover';
         }
 
+        // Oculta el mensaje de error despues de segundos 
         const toast = document.getElementById('toast-error');
         if (toast) {
             setTimeout(() => {

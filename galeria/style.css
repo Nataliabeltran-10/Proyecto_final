@@ -1,4 +1,3 @@
-/* Fondo general */
 body {
   margin: 0;
   padding: 0;
@@ -7,7 +6,6 @@ body {
   background-size: cover;
 }
 
-/* Título */
 h2 {
   text-align: center;
   color: white;
@@ -16,7 +14,6 @@ h2 {
   text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
 }
 
-/* Mensaje error */
 .mensaje-error {
   position: fixed;
   top: 20px;
@@ -39,18 +36,16 @@ h2 {
   opacity: 1;
 }
 
-/* Contenedor galería */
 .galeria-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 15px; /* Reducido el espacio entre tarjetas */
+  gap: 15px; 
   padding: 20px;
   max-width: 1200px;
-  margin: 0 auto; /* Esto centra el grid horizontalmente */
+  margin: 0 auto; /
 }
 
-/* Cada tarjeta */
-.foto-card {
+.foto-carta {
   background: rgba(255, 255, 255, 0.95);
   padding: 15px;
   border-radius: 12px;
@@ -60,29 +55,25 @@ h2 {
   max-width: 220px;
 }
 
-/* Imagen */
-.foto-card img {
+.foto-carta img {
   width: 100%;
   height: 160px;
   object-fit: cover;
   border-radius: 8px;
 }
 
-/* Título foto */
-.foto-card h3 {
+.foto-carta h3 {
   margin-top: 12px;
   font-size: 1.2em;
   color: #333;
 }
 
-/* Descripción */
-.foto-card p {
+.foto-carta p {
   font-size: 0.95em;
   margin: 8px 0;
   color: #666;
 }
 
-/* Concurso */
 .concurso {
   display: block;
   margin-top: 5px;
@@ -90,12 +81,10 @@ h2 {
   color: #197813;
 }
 
-/* Votación */
 .votacion-form {
   margin-top: 10px;
 }
 
-/* Estrellas */
 .estrellas {
   display: flex;
   justify-content: center;
@@ -110,7 +99,6 @@ h2 {
   transition: color 0.3s;
 }
 
-/* Botón enviar */
 .boton-enviar {
   background-color: #197813;
   border: none;

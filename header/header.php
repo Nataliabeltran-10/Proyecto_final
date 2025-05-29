@@ -9,6 +9,12 @@ $tipo = $_SESSION['usuario_rol'] ?? null;
 
 <link rel="stylesheet" href="<?= $rutaBase ?>style.css">
 
+<!--
+  Encabezado principal del sitio con el logo y la navegación.
+  - El logo enlaza a la página principal.
+  - Menú desplegable con enlaces a diferentes concursos, rankings y secciones de administrador y participante.
+  - Botón que muestra el nombre del usuario si está logueado, o enlace para acceder si no lo está.
+-->
 <header class="main-header">
   <div class="container-header">
     <div class="logo">
@@ -65,10 +71,12 @@ $tipo = $_SESSION['usuario_rol'] ?? null;
 <div id="toast-error" class="toast-error oculto"></div>
 
 <script>
+  // Función para cerrar sesion 
   function cerrarSesion() {
     window.location.replace("<?= $rutaBase ?>login/logout.php");
   }
 
+  // Funcion para mostar mensaje temporal
   function showToast(message) {
     const toast = document.getElementById("toast-error");
     toast.textContent = message;
@@ -83,6 +91,7 @@ $tipo = $_SESSION['usuario_rol'] ?? null;
     }, 3000);
   }
 
+  // Majerar interación con los menu 
   document.addEventListener('DOMContentLoaded', function () {
     const usuarioBtn = document.getElementById("usuario-nombre");
     const usuarioModal = document.getElementById("modal-usuario");
@@ -91,6 +100,7 @@ $tipo = $_SESSION['usuario_rol'] ?? null;
       usuarioModal.classList.toggle("visible");
     });
 
+    // Cierra modal si hace click fuera de el 
     document.addEventListener("click", function (event) {
       if (usuarioModal && !usuarioModal.contains(event.target) && event.target !== usuarioBtn) {
         usuarioModal.classList.remove("visible");
@@ -104,6 +114,7 @@ $tipo = $_SESSION['usuario_rol'] ?? null;
       menuModal.classList.toggle("visible");
     });
 
+    // Cierra modal si hace click fuera de el 
     document.addEventListener("click", function (event) {
       if (menuModal && !menuModal.contains(event.target) && event.target !== menuBtn) {
         menuModal.classList.remove("visible");
@@ -114,6 +125,7 @@ $tipo = $_SESSION['usuario_rol'] ?? null;
     const submenuParticipante = document.getElementById('submenu-participante');
     const userType = <?= json_encode($tipo) ?>;
 
+    // Controla la interacción del menú desplegable para usuarios tipo "participante"
     if (participanteLink && submenuParticipante) {
       participanteLink.addEventListener('click', function (e) {
         e.preventDefault();
@@ -136,6 +148,7 @@ $tipo = $_SESSION['usuario_rol'] ?? null;
     }
 
     const adminLink = document.getElementById('admin-link');
+    // Controla el acceso al enlace de administrador
     if (adminLink) {
       adminLink.addEventListener('click', function(e) {
         e.preventDefault();

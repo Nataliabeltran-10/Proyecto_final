@@ -37,10 +37,14 @@ h2.titulo {
   background: black;
   border-radius: 12px;
   padding: 1rem;
-  color: #197813;
+  color: white;
   box-shadow: 0 4px 10px black;
   width: 280px;
   text-align: center;
+}
+
+.titulo-foto{
+  color: #197813;
 }
 
 .foto-carta img {

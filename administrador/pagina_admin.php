@@ -17,8 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['foto_id'])) {
     $nuevoEstado = ($accion === 'admitir') ? 'admitida' : 'rechazada';
     $stmt = $conn->prepare("UPDATE fotos SET estado = ? WHERE id = ?");
     $stmt->execute([$nuevoEstado, $fotoId]);
-    http_response_code(200);
-    echo json_encode(['status' => 'ok']);
     exit;
 }
 
@@ -36,8 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['usuario_accion'])) {
             $usuarioId
         ]);
     }
-    http_response_code(200);
-    echo json_encode(['status' => 'ok']);
     exit;
 }
 
@@ -56,8 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['concurso_accion']) &&
         intval($_POST['limite']),
         $id
     ]);
-    http_response_code(200);
-    echo json_encode(['status'=>'ok']);
     exit;
 }
 
@@ -67,8 +61,8 @@ $fotos = $conn->query("SELECT f.id,f.titulo_imagen,f.descripcion,f.concurso,u.no
 $ganadores = $conn->query(
     "SELECT f.concurso,f.id AS foto_id,f.titulo_imagen,f.imagen,u.nombre,SUM(v.puntuacion) AS total FROM fotos f JOIN votos v ON f.id=v.foto_id JOIN usuarios u ON f.usuario_id=u.id WHERE f.estado='admitida' GROUP BY f.id ORDER BY f.concurso,total DESC"
 )->fetchAll(PDO::FETCH_ASSOC);
-// Consulta para listar usuario con rol de participante 
-$usuarios = $conn->query("SELECT * FROM usuarios WHERE rol='participante'")->fetchAll(PDO::FETCH_ASSOC);
+// Consulta para listar los usuarios
+$usuarios = $conn->query("SELECT * FROM usuarios ")->fetchAll(PDO::FETCH_ASSOC);
 // Concurso para lsitar los concursos 
 $concursos = $conn->query("SELECT * FROM concursos")->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -76,7 +70,8 @@ $concursos = $conn->query("SELECT * FROM concursos")->fetchAll(PDO::FETCH_ASSOC)
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Panel de Administrador</title>
+  <link rel="icon" href="../fotos/logo.png" type="image/png">
+  <title>AndaRally</title>
   <link rel="stylesheet" href="../header/style.css">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -106,7 +101,7 @@ $concursos = $conn->query("SELECT * FROM concursos")->fetchAll(PDO::FETCH_ASSOC)
       <?php else: foreach($fotos as $f): ?>
         <div class="foto-carta">
           <img src="data:image/jpeg;base64,<?= base64_encode($f['imagen']) ?>" alt="<?=htmlspecialchars($f['titulo_imagen'])?>">
-          <h3><?=htmlspecialchars($f['titulo_imagen'])?></h3>
+          <h3  class="titulo-foto" ><?=htmlspecialchars($f['titulo_imagen'])?></h3>
           <p><strong>Participante:</strong> <?=$f['nombre']?></p>
           <p><strong>Concurso:</strong> <?=$f['concurso']?></p>
           <p><?=nl2br(htmlspecialchars($f['descripcion']))?></p>

@@ -6,8 +6,8 @@ require_once("conexion.php");
 $usuario_id = $_SESSION['usuario_id'] ?? null;
 $usuario_rol = $_SESSION['usuario_rol'] ?? null;
 
+// Verifica que el usuario este autenticado y tenga rol de participante
 if (!$usuario_id || $usuario_rol !== 'participante') {
-    // Si es AJAX, responder JSON; si no, redirigir
     if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
         header('Content-Type: application/json');
         echo json_encode(['error' => 'No autorizado']);
@@ -19,7 +19,7 @@ if (!$usuario_id || $usuario_rol !== 'participante') {
     }
 }
 
-// Manejo de borrado si se ha enviado el formulario o petición AJAX
+// Maneja la e
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['borrar_id'])) {
     $borrar_id = $_POST['borrar_id'];
 
@@ -77,6 +77,10 @@ $imagenes = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <main class="gestion-participante-container">
     <h2>Estado Imágenes</h2>
 
+    <!--
+      Muestra una galería de imágenes del usuario.
+      Si no hay imágenes, muestra un mensaje indicando que no se han subido aún.
+    -->
     <div class="galeria">
       <?php if (empty($imagenes)): ?>
         <p class="sin-imagenes">No has subido imágenes aún.</p>
@@ -86,7 +90,7 @@ $imagenes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $base64 = base64_encode($img['imagen']);
             $mimeType = 'image/jpeg';
           ?>
-          <div class="imagen-card" id="imagen-card-<?= $img['id'] ?>">
+          <div class="imagen-carta" id="imagen-carta-<?= $img['id'] ?>">
             <img src="data:<?= $mimeType ?>;base64,<?= $base64 ?>" alt="<?= htmlspecialchars($img['titulo_imagen']) ?>" />
             <p class="titulo-imagen"><?= htmlspecialchars($img['titulo_imagen']) ?></p>
             <span class="estado <?= strtolower($img['estado']) ?>">
@@ -110,7 +114,7 @@ $imagenes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
   </div>
 
-  <!-- Formulario oculto para enviar borrado (ya no lo usaremos para submit) -->
+  <!-- Formulario oculto para enviar borrado -->
   <form id="form-borrar" method="POST" style="display: none;">
     <input type="hidden" name="borrar_id" id="borrar_id">
   </form>
@@ -134,7 +138,7 @@ $imagenes = $stmt->fetchAll(PDO::FETCH_ASSOC);
       if (borrarId === null) return;
 
       // Enviar el borrado con fetch POST
-      fetch('', { // misma URL actual
+      fetch('', { 
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -146,7 +150,7 @@ $imagenes = $stmt->fetchAll(PDO::FETCH_ASSOC);
       .then(data => {
         if (data.success) {
           // Eliminar la tarjeta del DOM
-          const card = document.getElementById(`imagen-card-${borrarId}`);
+          const card = document.getElementById(`imagen-carta-${borrarId}`);
           if (card) card.remove();
         } else {
           alert(data.error || 'Error al borrar la imagen');

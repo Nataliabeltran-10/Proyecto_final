@@ -21,6 +21,7 @@ $datos = [
     'Tradiciones' => []
 ];
 
+// Agrupa las fotos por nombre de concurso y recopila los títulos e índices de votación.
 foreach ($fotos as $foto) {
     $nombre = htmlspecialchars($foto['titulo_imagen']);
     $total = intval($foto['total_votos']);
@@ -58,6 +59,7 @@ foreach ($fotos as $foto) {
     </div>
 
     <script>
+        //Creación de graficos
     const datosLugares = <?= json_encode($datos['Lugares']) ?>;
     const datosTradiciones = <?= json_encode($datos['Tradiciones']) ?>;
 

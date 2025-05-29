@@ -1,4 +1,3 @@
-/* Estilos generales del formulario */
 form {
     position: relative;
     z-index: 1;
@@ -10,151 +9,149 @@ form {
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
   }
   
-  h2 {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    color: white;
-    margin-top: 40px;
-    font-size: 3em;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-  }
+h2 {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: white;
+  margin-top: 40px;
+  font-size: 3em;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
   
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: white;
-  }
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: white;
+}
   
-  input[type="text"],
-  input[type="password"],
-  input[type="email"],
-  select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: none;
-    border-radius: 8px;
-    background: #f2f2f2;
-  }
+input[type="text"],
+input[type="password"],
+input[type="email"],
+select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 8px;
+  background: #f2f2f2;
+}
   
-  input[type="submit"] {
-    width: 100%;
-    background-color: #197813;
-    color: white;
-    font-weight: bold;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
+input[type="submit"] {
+  width: 100%;
+  background-color: #197813;
+  color: white;
+  font-weight: bold;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
   
-  input[type="submit"]:hover {
-    background-color: #65e25c;
-  }
-  
-  /* Fondo general del body */
-  body {
-    margin: 0;
-    padding: 0;
-    position: relative;
-    height: 100vh;
-  }
-  
-  body::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    z-index: 0;
-  }
-  
-  /* Estilo del modal */
-  .modal {
-    display: none;
-    position: fixed;
-    z-index: 9999;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 100vw;
-    background-color: rgba(0,0,0,0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    animation: fadeIn 0.3s ease-in-out;
-  }
-  
-  .modal-content {
-    background-color: #fff;
-    padding: 30px 20px;
-    border-radius: 15px;
-    max-width: 400px;
-    width: 90%;
-    text-align: center;
-    box-shadow: 0 0 20px rgba(0,0,0,0.3);
-    animation: slideIn 0.3s ease-out;
-    border: 2px solid black;
-  }
-  
-  .modal-content p {
-    margin-bottom: 20px;
-    font-size: 1.2em;
-    color: #333;
-  }
-  
-  .close-btn {
-    background-color: #197813;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background 0.3s ease;
-  }
-  
-  .close-btn:hover {
-    background-color: #65e25c;
-  }
-  
-  @keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
-  }
-  
-  @keyframes slideIn {
-    from {
-      transform: translateY(-20px);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
+input[type="submit"]:hover {
+  background-color: #65e25c;
+}
 
-  .register-link {
-    text-align: center;
-    margin-top: 15px;
-    font-size: 0.9em;
-  }
+body {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  height: 100vh;
+}
   
-  .register-link a {
-    color: #197813;
-    text-decoration: none;
-  }
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
   
-  .register-link a:hover {
-    text-decoration: underline;
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 30px 20px;
+  border-radius: 15px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  animation: slideIn 0.3s ease-out;
+  border: 2px solid black;
+}
+  
+.modal-content p {
+  margin-bottom: 20px;
+  font-size: 1.2em;
+  color: #333;
+}
+  
+.close-btn {
+  background-color: #197813;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+  
+.close-btn:hover {
+  background-color: #65e25c;
+}
+  
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+  
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
   }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 0.9em;
+}
+  
+.register-link a {
+  color: #197813;
+  text-decoration: none;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}
   
   

@@ -7,8 +7,6 @@ body {
     font-family: 'Arial', sans-serif;
     color: #ffffff;
     margin: 0;
-
-    /* Ajusta este valor según la altura real del header si es fijo */
     padding-top: 1px; 
 }
 

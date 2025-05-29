@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute([$foto_id]);
     $datosConcurso = $stmt->fetch();
 
-   
+   // Verifica si no se encuentra datos de concurso
     if (!$datosConcurso) {
         $mensaje = "No se pudo verificar el concurso de la foto.";
         if ($isAjax) {
@@ -90,10 +90,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    // Crea un objeto con la fecha de inicio del concurso
     $fechaInicio = new DateTime($datosConcurso['fecha_inicio']);
+    // Crea un objeto con la fecha de fin del concurso 
     $fechaFin = new DateTime($datosConcurso['fecha_fin']);
+    // Crea un objeto con la fecha y hora actual 
     $ahora = new DateTime();
 
+    // Verifica que el concurso activo
     if ($ahora < $fechaInicio || $ahora > $fechaFin) {
         $mensaje = "El periodo de votación ha finalizado o aún no ha comenzado.";
         if ($isAjax) {
@@ -105,11 +109,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    // Verifica si el usuario ya ha botado la foto 
     $sqlCheck = "SELECT * FROM votos WHERE foto_id = ? AND usuario_id = ?";
     $stmtCheck = $conn->prepare($sqlCheck);
     $stmtCheck->execute([$foto_id, $usuario_id]);
     $votoExistente = $stmtCheck->fetch();
 
+    // Si ha votado se actualiza la puntuación, si no ha botado se registra nuevo voto
     if ($votoExistente) {
         $sqlUpdate = "UPDATE votos SET puntuacion = ? WHERE foto_id = ? AND usuario_id = ?";
         $stmtUpdate = $conn->prepare($sqlUpdate);
@@ -145,14 +151,17 @@ unset($_SESSION['mensaje']);
 
 <h2>Galería de Fotos: Concurso "Tradiciones"</h2>
 
+<!-- Muestra un mensaje de agradecimiento y prepara un contenedor oculto para mensajes dinámicos. -->
 <?php if ($mensajeAgradecimiento): ?>
     <div class="mensaje-error animar-mensaje"><?= htmlspecialchars($mensajeAgradecimiento) ?></div>
 <?php endif; ?>
 <div id="mensaje-dinamico" class="mensaje-error animar-mensaje" style="display: none;"></div>
 
+
+<!-- Contenedor de foto -->
 <div class="galeria-container">
     <?php foreach ($fotos as $foto): ?>
-        <div class="foto-card">
+        <div class="foto-carta">
             <?php
             $imagenBase64 = base64_encode($foto['imagen']);
             $titulo = htmlspecialchars($foto['titulo_imagen']);
@@ -163,6 +172,7 @@ unset($_SESSION['mensaje']);
             <p><?= $descripcion ?></p>
             <span class="concurso"><?= htmlspecialchars($foto['concurso']) ?></span>
 
+            <!-- Si el concurso esta activo se muestra el formulario de votación -->
             <?php if ($concursoActivo): ?>
                 <form class="votacion-form" method="POST">
                     <input type="hidden" name="foto_id" value="<?= $foto['id'] ?>">
@@ -182,16 +192,18 @@ unset($_SESSION['mensaje']);
 </div>
 
 <script>
-setTimeout(() => {
-    const mensaje = document.querySelector('.mensaje-error');
-    if (mensaje) mensaje.classList.remove('animar-mensaje');
-}, 4000);
+    // Tiempo para que desaparezca el mensaje 
+    setTimeout(() => {
+        const mensaje = document.querySelector('.mensaje-error');
+        if (mensaje) mensaje.classList.remove('animar-mensaje');
+    }, 4000);
 
-document.querySelectorAll('.votacion-form').forEach(form => {
-    const estrellas = form.querySelectorAll('.estrella');
-    const input = form.querySelector('input[name="puntuacion"]');
-    const fotoId = form.querySelector('input[name="foto_id"]').value;
-    let puntuacion = 0;
+    // Votación con estrella 
+    document.querySelectorAll('.votacion-form').forEach(form => {
+        const estrellas = form.querySelectorAll('.estrella');
+        const input = form.querySelector('input[name="puntuacion"]');
+        const fotoId = form.querySelector('input[name="foto_id"]').value;
+        let puntuacion = 0;
 
     estrellas.forEach((estrella, index) => {
         estrella.addEventListener('mouseover', () => {
@@ -212,6 +224,8 @@ document.querySelectorAll('.votacion-form').forEach(form => {
         });
     });
 
+    // Maneja el envío del formulario de votación mediante AJAX para evitar recarga de página,
+    // muestra mensajes dinámicos de éxito o error y controla la visibilidad de estos mensajes.
     form.addEventListener('submit', function(e) {
         e.preventDefault();
 
