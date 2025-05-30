@@ -20,6 +20,12 @@
             exit;
         }
 
+    if ($usuario_rol === 'administrador') {
+        echo json_encode(['success' => false, 'message' => 'Los administradores no pueden votar.']);
+        exit;
+    }
+
+
         // Concierte los datos a entero 
         $foto_id = intval($_POST['foto_id']);
         $puntuacion = intval($_POST['puntuacion']);

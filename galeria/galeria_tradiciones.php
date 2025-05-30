@@ -47,6 +47,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    // Verifica si el usuario es administrador para que no pueda votar
+    if ($usuario_rol === 'administrador') {
+        $mensaje = 'Los administradores no pueden votar.';
+        if ($isAjax) {
+            echo json_encode(['success' => false, 'message' => $mensaje]);
+            exit;
+        }
+        $_SESSION['mensaje'] = $mensaje;
+        header("Location: galeria_tradiciones.php");
+        exit;
+    }
+
+
     
     $foto_id = intval($_POST['foto_id']);
     $puntuacion = intval($_POST['puntuacion']);
