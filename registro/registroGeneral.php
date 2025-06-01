@@ -32,6 +32,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $rol
             ]);
 
+            // Enviar correo de bienvenida
+            $asunto = "Registro en AndaRally";
+            $mensaje = "Usted ($nombre) ha sido registrado exitosamente en AndaRally.";
+            $cabeceras = "From: no-responder@andarally.com\r\n" .
+                        "Reply-To: no-responder@andarally.com\r\n" .
+                        "X-Mailer: PHP/" . phpversion();
+
+            // Enviar email
+            mail($email, $asunto, $mensaje, $cabeceras);
+
+
             header("Location: ../login/login.php");
             exit;
         }
