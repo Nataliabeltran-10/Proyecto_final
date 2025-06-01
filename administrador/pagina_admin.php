@@ -15,8 +15,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['foto_id'])) {
     $fotoId = intval($_POST['foto_id']);
     $accion = $_POST['accion'];
     $nuevoEstado = ($accion === 'admitir') ? 'admitida' : 'rechazada';
+
+if ($nuevoEstado === 'rechazada') {
+    $comentario = isset($_POST['comentario']) ? $_POST['comentario'] : '';
+    $stmt = $conn->prepare("UPDATE fotos SET estado = ?, comentario_rechazo = ? WHERE id = ?");
+    $stmt->execute([$nuevoEstado, $comentario, $fotoId]);
+} else {
     $stmt = $conn->prepare("UPDATE fotos SET estado = ? WHERE id = ?");
     $stmt->execute([$nuevoEstado, $fotoId]);
+}
+
     exit;
 }
 
@@ -175,6 +183,18 @@ $concursos = $conn->query("SELECT * FROM concursos")->fetchAll(PDO::FETCH_ASSOC)
     </table>
   </section>
 
+  <!-- Modal de Rechazo con Comentario -->
+  <div id="modal-rechazo" class="modal" style="display:none; background-color: rgba(0,0,0,0.85); color:white;">
+    <div class="modal-contentu" style="background-color: #222; padding: 20px; border-radius: 10px;">
+      <p>¿Por qué estás rechazando esta foto?</p>
+      <textarea id="comentario-rechazo" style="width:100%; height:80px; margin-top:10px;"></textarea>
+      <div class="modal-buttons" style="margin-top:10px;">
+        <button id="confirmar-rechazo" class="btn-confirm" style="background-color:green;">Aceptar</button>
+        <button id="cancelar-rechazo" class="btn-cancel">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
   <script>
   let usuarioAEliminar = null;
 
@@ -209,8 +229,34 @@ $concursos = $conn->query("SELECT * FROM concursos")->fetchAll(PDO::FETCH_ASSOC)
     document.querySelectorAll('.form-admision').forEach(div=>{
       const id = div.dataset.id;
       div.querySelector('.btn-admitir').onclick = _=>ajax({foto_id:id,accion:'admitir'},()=>div.closest('.foto-carta').remove());
-      div.querySelector('.btn-rechazar').onclick = _=>ajax({foto_id:id,accion:'rechazar'},()=>div.closest('.foto-carta').remove());
-    });
+      div.querySelector('.btn-rechazar').onclick = _=>{
+        fotoARechazar = div;
+        document.getElementById('comentario-rechazo').value = '';
+        document.getElementById('modal-rechazo').style.display = 'flex';
+      };
+
+  });
+
+  document.getElementById('confirmar-rechazo').onclick = ()=>{
+  if (!fotoARechazar) return;
+  const id = fotoARechazar.dataset.id;
+  const comentario = document.getElementById('comentario-rechazo').value.trim();
+  ajax(
+    {foto_id:id, accion:'rechazar', comentario:comentario},
+    ()=>{
+      fotoARechazar.closest('.foto-carta').remove();
+      showToast('Foto rechazada correctamente');
+      fotoARechazar = null;
+      document.getElementById('modal-rechazo').style.display = 'none';
+    }
+  );
+};
+
+document.getElementById('cancelar-rechazo').onclick = ()=>{
+  fotoARechazar = null;
+  document.getElementById('modal-rechazo').style.display = 'none';
+};
+
 
     // Edición y eliminación de usuarios en la tabla 
     document.querySelectorAll('.form-usuario').forEach(div=>{
@@ -272,6 +318,9 @@ $concursos = $conn->query("SELECT * FROM concursos")->fetchAll(PDO::FETCH_ASSOC)
     .then(r => r.ok ? onSuccess() : showToast('Error inesperado'))
     .catch(_ => showToast('Error de red'));
   }
+
+  let fotoARechazar = null;
+
   </script>
 </body>
 </html>

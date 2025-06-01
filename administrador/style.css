@@ -271,4 +271,76 @@ input[type="number"] {
   }
 }
 
+/* Modal de rechazo */
+#modal-rechazo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.85);
+  z-index: 1000;
+}
+
+#modal-rechazo .modal-contentu {
+  background-color: #1c1c1c;
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.7);
+}
+
+#modal-rechazo textarea {
+  width: 100%;
+  height: 80px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 14px;
+  background-color: #2a2a2a;
+  color: white;
+  resize: none;
+}
+
+#modal-rechazo .modal-buttons {
+  margin-top: 15px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+#modal-rechazo .btn-confirm {
+  background-color: #28a745;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+#modal-rechazo .btn-confirm:hover {
+  background-color: #218838;
+}
+
+#modal-rechazo .btn-cancel {
+  background-color: #6c757d;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#modal-rechazo .btn-cancel:hover {
+  background-color: #5a6268;
+}
 

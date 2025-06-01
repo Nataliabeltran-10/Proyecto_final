@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['borrar_id'])) {
 }
 
 // Consultar imágenes del usuario
-$sql = "SELECT id, titulo_imagen, imagen, estado FROM fotos WHERE usuario_id = ?";
+$sql = "SELECT id, titulo_imagen, imagen, estado, comentario_rechazo FROM fotos WHERE usuario_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->execute([$usuario_id]);
 $imagenes = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -94,6 +94,9 @@ $imagenes = $stmt->fetchAll(PDO::FETCH_ASSOC);
           <div class="imagen-carta" id="imagen-carta-<?= $img['id'] ?>">
             <img src="data:<?= $mimeType ?>;base64,<?= $base64 ?>" alt="<?= htmlspecialchars($img['titulo_imagen']) ?>" />
             <p class="titulo-imagen"><?= htmlspecialchars($img['titulo_imagen']) ?></p>
+               <?php if ($img['estado'] === 'rechazada' && !empty($img['comentario_rechazo'])): ?>
+            <p class="comentario-rechazo"><strong>Motivo del rechazo:</strong><br><?= nl2br(htmlspecialchars($img['comentario_rechazo'])) ?></p>
+            <?php endif; ?>
             <span class="estado <?= strtolower($img['estado']) ?>">
               <?= ucfirst($img['estado']) ?>
             </span>

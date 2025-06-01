@@ -171,4 +171,14 @@ body {
   background-color: #666;
 }
 
+.comentario-rechazo {
+  margin-top: 8px;
+  color: #e74c3c;
+  font-style: italic;
+  background-color: #ffe6e6;
+  padding: 6px;
+  border-radius: 6px;
+}
+
+
 
