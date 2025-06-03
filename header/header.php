@@ -28,6 +28,7 @@ $tipo = $_SESSION['usuario_rol'] ?? null;
         <button id="menu-toggle" class="btn-menu">Menú</button>
         <div id="menu-modal" class="modal oculto">
           <div class="modal-content">
+            <a href="<?= $rutaBase ?>normas/normas.php">Normativa</a>
             <a href="<?= $rutaBase ?>galeria/galeria.php">Concurso Lugares</a>
             <a href="<?= $rutaBase ?>galeria/galeria_tradiciones.php">Concurso Tradiciones</a>
             <a href="<?= $rutaBase ?>rankings/rankings.php">Rankings</a>
