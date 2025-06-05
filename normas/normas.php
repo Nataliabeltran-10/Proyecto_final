@@ -1,14 +1,16 @@
-<?php session_start(); ?>
+<?php session_start(); 
+$rutaBase = '../';
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <title>Normas del Concurso - AndaRally</title>
-  <link rel="stylesheet" href="../header/style.css">
+  <link rel="stylesheet" href="<?= $rutaBase ?>header/style.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<?php require_once("../header/header.php"); ?>
+<?php require_once("{$rutaBase}header/header.php"); ?>
 <main>
 
  <h1>Normas del Concurso Fotográfico AndaRally</h1>
