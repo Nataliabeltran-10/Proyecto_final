@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-require_once("{$rutaBase}header/header.php");
+
 ?>
 
 <!DOCTYPE html>
@@ -47,6 +47,7 @@ require_once("{$rutaBase}header/header.php");
   <link rel="stylesheet" href="../header/style.css">
 </head>
 <body>
+  <?php require_once("{$rutaBase}header/header.php"); ?>
   <h2>Editar Perfil</h2>
   
   <!-- Formulario para que el usuario actualice su nombre y correo electronico -->
