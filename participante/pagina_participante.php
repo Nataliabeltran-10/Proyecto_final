@@ -2,7 +2,7 @@
 session_start();
 $rutaBase = '../';
 
-require_once("{$rutaBase}header/header.php");
+
 
 // Solo participantes pueden acceder
 if (!isset($_SESSION['usuario_rol']) || $_SESSION['usuario_rol'] !== 'participante') {
@@ -24,6 +24,7 @@ $rutaFondo = "{$rutaBase}fotos/fondo.jpg";
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="<?= $rutaBase ?>header/style.css">
 </head>
+    <?php require_once("{$rutaBase}header/header.php");?>
     <body data-fondo="<?= $rutaFondo ?>">
 
     <div class="container">
